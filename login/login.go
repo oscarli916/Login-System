@@ -27,6 +27,6 @@ func CreateLogin(h header.Header) (login, error) {
 	} else if h.Social == OTP {
 		return otpLogin{h.Authorization}, nil
 	} else {
-		return nil, InvalidHeaderErrorHandler{err: "invalid header"}
+		return nil, InvalidHeaderErrorHandler{}
 	}
 }
