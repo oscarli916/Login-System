@@ -4,19 +4,19 @@ import (
 	"fmt"
 )
 
-type FacebookLogin struct{
+type FacebookLogin struct {
 	token string
 }
 
-func (l FacebookLogin) Login(){
+func (l FacebookLogin) Login() {
 	fmt.Println("Using Facebook to logging in...")
 }
 
-func (l FacebookLogin) GetUserData(){
+func (l FacebookLogin) GetUserData() {
 	fmt.Println("Facebook is getting user data...")
 	fmt.Printf("User Token is: %v \n\n", l.getUserToken())
 }
 
-func (l FacebookLogin) getUserToken() (string){
+func (l FacebookLogin) getUserToken() string {
 	return l.token
 }
