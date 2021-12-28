@@ -12,20 +12,20 @@ const (
 	ERROR    = "Error"
 )
 
-type Login interface {
+type login interface {
 	Login()
 	GetUserData()
 }
 
-func CreateLogin(h header.Header) (Login, error) {
+func CreateLogin(h header.Header) (login, error) {
 	if h.Social == GOOGLE {
-		return GoogleLogin{h.Authorization}, nil
+		return googleLogin{h.Authorization}, nil
 	} else if h.Social == FACEBOOK {
-		return FacebookLogin{h.Authorization}, nil
+		return facebookLogin{h.Authorization}, nil
 	} else if h.Social == APPLE {
-		return AppleLogin{h.Authorization}, nil
+		return appleLogin{h.Authorization}, nil
 	} else if h.Social == OTP {
-		return OTPLogin{h.Authorization}, nil
+		return otpLogin{h.Authorization}, nil
 	} else {
 		return nil, InvalidHeaderErrorHandler{err: "invalid header"}
 	}

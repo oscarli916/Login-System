@@ -4,19 +4,19 @@ import (
 	"fmt"
 )
 
-type OTPLogin struct {
+type otpLogin struct {
 	token string
 }
 
-func (l OTPLogin) Login() {
+func (l otpLogin) Login() {
 	fmt.Println("Using OTP to logging in...")
 }
 
-func (l OTPLogin) GetUserData() {
+func (l otpLogin) GetUserData() {
 	fmt.Println("OTP is getting user data...")
 	fmt.Printf("User Token is: %v \n\n", l.getUserToken())
 }
 
-func (l OTPLogin) getUserToken() string {
+func (l otpLogin) getUserToken() string {
 	return l.token
 }
