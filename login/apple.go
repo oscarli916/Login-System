@@ -8,8 +8,9 @@ type appleLogin struct {
 	token string
 }
 
-func (l appleLogin) Login() {
+func (l appleLogin) Login() (userdata, error) {
 	fmt.Println("Using Apple to logging in...")
+	return nil, nil
 }
 
 func (l appleLogin) GetUserData() {
