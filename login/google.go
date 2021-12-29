@@ -2,18 +2,19 @@ package login
 
 import (
 	"fmt"
+	"time"
 
 	jwt "github.com/golang-jwt/jwt"
 )
 
 type GoogleClaims struct {
-	email          string
-	email_verified string
-	name           string
-	picture        string
-	given_name     string
-	family_name    string
-	locale         string
+	Email          string `json:"email"`
+	Email_verified string `json:"email_verified"`
+	Name           string `json:"name"`
+	Picture        string `json:"picture"`
+	Given_name     string `json:"given_name"`
+	Family_name    string `json:"family_name"`
+	Locale         string `json:"locale"`
 	jwt.StandardClaims
 }
 
@@ -25,25 +26,45 @@ func (l googleLogin) Login() (userdata, error) {
 	fmt.Println("Using Google to logging in...")
 
 	token, err := jwt.ParseWithClaims(l.getUserToken(), &GoogleClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SINGINGKEY), nil
+		return []byte(SIGNINGKEY), nil
 	})
 	if err != nil {
 		fmt.Errorf("Cannot verify token %v\n", err)
 	}
 
-	claims, ok := token.Claims.(GoogleClaims)
+	claims, ok := token.Claims.(*GoogleClaims)
 	if !ok {
 		fmt.Errorf("Token claims map error")
 	}
 
+	// Hanlde empty token
+	if (jwt.StandardClaims{} == claims.StandardClaims) {
+		return nil, fmt.Errorf("Token is empty")
+	}
+
+	// Handle issuer
+	if claims.Issuer != "https://accounts.google.com" {
+		return nil, fmt.Errorf("Unsupported issuer")
+	}
+
+	// Handle expired
+	if !claims.VerifyExpiresAt(time.Now().Unix(), false) {
+		return nil, fmt.Errorf("Token was expired")
+	}
+
+	// Handle token not been issued
+	if !claims.VerifyIssuedAt(time.Now().Unix(), false) {
+		return nil, fmt.Errorf("Token has not been issued yet")
+	}
+
 	userData := map[string]interface{}{
-		"email":          claims.email,
-		"email_verified": claims.email_verified,
-		"name":           claims.name,
-		"picture":        claims.picture,
-		"given_name":     claims.given_name,
-		"family_name":    claims.family_name,
-		"locale":         claims.locale,
+		"email":          claims.Email,
+		"email_verified": claims.Email_verified,
+		"name":           claims.Name,
+		"picture":        claims.Picture,
+		"given_name":     claims.Given_name,
+		"family_name":    claims.Family_name,
+		"locale":         claims.Locale,
 	}
 
 	return userData, nil

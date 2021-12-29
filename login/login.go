@@ -5,13 +5,14 @@ import (
 )
 
 const (
-	GOOGLE     = "Google"
-	FACEBOOK   = "Facebook"
-	APPLE      = "Apple"
-	OTP        = "OTP"
-	ERROR      = "Error"
-	SINGINGKEY = "secret"
+	GOOGLE   = "Google"
+	FACEBOOK = "Facebook"
+	APPLE    = "Apple"
+	OTP      = "OTP"
+	ERROR    = "Error"
 )
+
+var SIGNINGKEY = []byte("secret")
 
 type userdata map[string]interface{}
 

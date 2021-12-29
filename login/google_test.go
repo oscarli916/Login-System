@@ -9,7 +9,7 @@ import (
 
 func generateToken(claims GoogleClaims) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(SINGINGKEY)
+	tokenString, err := token.SignedString(SIGNINGKEY)
 	if err != nil {
 		fmt.Println("Token is corrupted. ", err)
 	}
