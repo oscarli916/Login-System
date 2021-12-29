@@ -5,11 +5,12 @@ import (
 )
 
 const (
-	GOOGLE   = "Google"
-	FACEBOOK = "Facebook"
-	APPLE    = "Apple"
-	OTP      = "OTP"
-	ERROR    = "Error"
+	GOOGLE     = "Google"
+	FACEBOOK   = "Facebook"
+	APPLE      = "Apple"
+	OTP        = "OTP"
+	ERROR      = "Error"
+	SINGINGKEY = "secret"
 )
 
 type login interface {
