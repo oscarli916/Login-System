@@ -13,8 +13,10 @@ const (
 	SINGINGKEY = "secret"
 )
 
+type userdata map[string]interface{}
+
 type login interface {
-	Login()
+	Login() (userdata, error)
 	GetUserData()
 }
 
