@@ -8,8 +8,9 @@ type otpLogin struct {
 	token string
 }
 
-func (l otpLogin) Login() {
+func (l otpLogin) Login() (userdata, error) {
 	fmt.Println("Using OTP to logging in...")
+	return nil, nil
 }
 
 func (l otpLogin) GetUserData() {
