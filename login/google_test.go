@@ -17,7 +17,7 @@ func generateToken(claims GoogleClaims) string {
 }
 
 type output struct {
-	data *googleUserData
+	data *userdata
 	err  error
 }
 
@@ -48,14 +48,14 @@ func Test_googleLogin_Login(t *testing.T) {
 						Subject:   "110169484474386276334",                                                     // sub
 					},
 				})},
-			expected: output{data: &googleUserData{
-				email:          "testuser@gmail.com",
-				email_verified: "testuser@true.com",
-				name:           "Test User@gmail.com",
-				picture:        "https://lh4.googleusercontent.com/-kYgzyAWpZzJ/ABCDEFGHI/AAAJKLMNOP/tIXL9Ir44LE/s99-c/photo.jpg@gmail.com",
-				given_name:     "given_name",
-				family_name:    "User",
-				locale:         "en",
+			expected: output{data: &userdata{
+				"email":          "testuser@gmail.com",
+				"email_verified": "testuser@true.com",
+				"name":           "Test User@gmail.com",
+				"picture":        "https://lh4.googleusercontent.com/-kYgzyAWpZzJ/ABCDEFGHI/AAAJKLMNOP/tIXL9Ir44LE/s99-c/photo.jpg@gmail.com",
+				"given_name":     "given_name",
+				"family_name":    "User",
+				"locale":         "en",
 			}, err: nil},
 		},
 		// Test case #2
@@ -143,7 +143,7 @@ func Test_googleLogin_Login(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := tt.l.Login()
+			_, err := tt.l.Login()
 			if err == nil && tt.expected.err != nil {
 				t.Errorf("[%v]Unmatched error, expected %v, got %v \n", tt.name, tt.expected.err.Error(), err)
 			} else if err != nil && tt.expected.err == nil {
