@@ -17,22 +17,37 @@ type GoogleClaims struct {
 	jwt.StandardClaims
 }
 
-type googleUserData struct {
-	email          string
-	email_verified string
-	name           string
-	picture        string
-	given_name     string
-	family_name    string
-	locale         string
-}
-
 type googleLogin struct {
 	token string
 }
 
-func (l googleLogin) Login() {
+func (l googleLogin) Login() (userdata, error) {
 	fmt.Println("Using Google to logging in...")
+
+	token, err := jwt.ParseWithClaims(l.getUserToken(), &GoogleClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SINGINGKEY), nil
+	})
+	if err != nil {
+		fmt.Errorf("Cannot verify token %v\n", err)
+	}
+
+	claims, ok := token.Claims.(GoogleClaims)
+	if !ok {
+		fmt.Errorf("Token claims map error")
+	}
+
+	userData := map[string]interface{}{
+		"email":          claims.email,
+		"email_verified": claims.email_verified,
+		"name":           claims.name,
+		"picture":        claims.picture,
+		"given_name":     claims.given_name,
+		"family_name":    claims.family_name,
+		"locale":         claims.locale,
+	}
+
+	return userData, nil
+
 }
 
 func (l googleLogin) GetUserData() {
