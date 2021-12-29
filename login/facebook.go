@@ -8,8 +8,9 @@ type facebookLogin struct {
 	token string
 }
 
-func (l facebookLogin) Login() {
+func (l facebookLogin) Login() (userdata, error) {
 	fmt.Println("Using Facebook to logging in...")
+	return nil, nil
 }
 
 func (l facebookLogin) GetUserData() {
