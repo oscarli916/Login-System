@@ -7,17 +7,6 @@ import (
 	jwt "github.com/golang-jwt/jwt"
 )
 
-type GoogleClaims struct {
-	email          string
-	email_verified string
-	name           string
-	picture        string
-	given_name     string
-	family_name    string
-	locale         string
-	jwt.StandardClaims
-}
-
 func generateToken(claims GoogleClaims) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(SINGINGKEY)
@@ -27,18 +16,8 @@ func generateToken(claims GoogleClaims) string {
 	return tokenString
 }
 
-type userData struct {
-	email          string
-	email_verified string
-	name           string
-	picture        string
-	given_name     string
-	family_name    string
-	locale         string
-}
-
 type output struct {
-	data *userData
+	data *googleUserData
 	err  error
 }
 
@@ -69,7 +48,7 @@ func Test_googleLogin_Login(t *testing.T) {
 						Subject:   "110169484474386276334",                                                     // sub
 					},
 				})},
-			expected: output{data: &userData{
+			expected: output{data: &googleUserData{
 				email:          "testuser@gmail.com",
 				email_verified: "testuser@true.com",
 				name:           "Test User@gmail.com",
@@ -144,6 +123,22 @@ func Test_googleLogin_Login(t *testing.T) {
 					},
 				})},
 			expected: output{data: nil, err: fmt.Errorf("Token has not been issued yet")},
+		},
+		// Test case #5
+		{
+			name: "EmotyTest: Pass empty token",
+			l: googleLogin{generateToken(
+				GoogleClaims{
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					jwt.StandardClaims{},
+				})},
+			expected: output{data: nil, err: fmt.Errorf("Token is empty")},
 		},
 	}
 	for _, tt := range tests {
