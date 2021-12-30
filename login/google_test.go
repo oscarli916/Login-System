@@ -79,7 +79,7 @@ func Test_googleLogin_Login(t *testing.T) {
 						Subject:   "110169484474386276334",                                                     // sub
 					},
 				})},
-			expected: output{data: nil, err: fmt.Errorf("Unsupported issuer")},
+			expected: output{data: nil, err: UnsupportedIssuerErrorHandler{}},
 		},
 		// Test case #3
 		{
@@ -101,7 +101,7 @@ func Test_googleLogin_Login(t *testing.T) {
 						Subject:   "110169484474386276334",                                                     // sub
 					},
 				})},
-			expected: output{data: nil, err: fmt.Errorf("Token was expired")},
+			expected: output{data: nil, err: TokenExpiredErrorHandler{}},
 		},
 		// Test case #4
 		{
@@ -123,7 +123,7 @@ func Test_googleLogin_Login(t *testing.T) {
 						Subject:   "110169484474386276334",                                                     // sub
 					},
 				})},
-			expected: output{data: nil, err: fmt.Errorf("Token has not been issued yet")},
+			expected: output{data: nil, err: TokenNotIssuedErrorHandler{}},
 		},
 		// Test case #5
 		{
@@ -139,7 +139,7 @@ func Test_googleLogin_Login(t *testing.T) {
 					"",
 					jwt.StandardClaims{},
 				})},
-			expected: output{data: nil, err: fmt.Errorf("Token is empty")},
+			expected: output{data: nil, err: EmptyTokenErrorHandler{}},
 		},
 	}
 	for _, tt := range tests {

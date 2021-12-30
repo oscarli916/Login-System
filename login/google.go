@@ -29,32 +29,32 @@ func (l googleLogin) Login() (userdata, error) {
 		return []byte(SIGNINGKEY), nil
 	})
 	if err != nil {
-		fmt.Errorf("Cannot verify token %v\n", err)
+		fmt.Printf("Cannot verify token %v\n", err)
 	}
 
 	claims, ok := token.Claims.(*GoogleClaims)
 	if !ok {
-		fmt.Errorf("Token claims map error")
+		fmt.Println("Token claims map error")
 	}
 
 	// Hanlde empty token
 	if (jwt.StandardClaims{} == claims.StandardClaims) {
-		return nil, fmt.Errorf("Token is empty")
+		return nil, EmptyTokenErrorHandler{}
 	}
 
 	// Handle issuer
 	if claims.Issuer != GOOGLEISSUER {
-		return nil, fmt.Errorf("Unsupported issuer")
+		return nil, UnsupportedIssuerErrorHandler{}
 	}
 
 	// Handle expired
 	if !claims.VerifyExpiresAt(time.Now().Unix(), false) {
-		return nil, fmt.Errorf("Token was expired")
+		return nil, TokenExpiredErrorHandler{}
 	}
 
 	// Handle token not been issued
 	if !claims.VerifyIssuedAt(time.Now().Unix(), false) {
-		return nil, fmt.Errorf("Token has not been issued yet")
+		return nil, TokenNotIssuedErrorHandler{}
 	}
 
 	userData := map[string]interface{}{
