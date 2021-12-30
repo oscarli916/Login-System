@@ -3,6 +3,7 @@ package login
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	jwt "github.com/golang-jwt/jwt"
 )
@@ -42,8 +43,8 @@ func Test_googleLogin_Login(t *testing.T) {
 					"en",
 					jwt.StandardClaims{
 						Audience:  "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", // aud
-						ExpiresAt: 1700000000,                                                                  // exp
-						IssuedAt:  1640681219,                                                                  // iat
+						ExpiresAt: time.Now().AddDate(0, 0, 1).Unix(),                                          // exp
+						IssuedAt:  time.Now().AddDate(0, 0, -1).Unix(),                                         // iat
 						Issuer:    "https://accounts.google.com",                                               // iss
 						Subject:   "110169484474386276334",                                                     // sub
 					},
@@ -72,8 +73,8 @@ func Test_googleLogin_Login(t *testing.T) {
 					"en",
 					jwt.StandardClaims{
 						Audience:  "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", // aud
-						ExpiresAt: 1700000000,                                                                  // exp
-						IssuedAt:  1640681219,                                                                  // iat
+						ExpiresAt: time.Now().AddDate(0, 0, 1).Unix(),                                          // exp
+						IssuedAt:  time.Now().AddDate(0, 0, -1).Unix(),                                         // iat
 						Issuer:    "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_CtRgepXa7",           // iss
 						Subject:   "110169484474386276334",                                                     // sub
 					},
@@ -94,8 +95,8 @@ func Test_googleLogin_Login(t *testing.T) {
 					"en",
 					jwt.StandardClaims{
 						Audience:  "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", // aud
-						ExpiresAt: 1640681219,                                                                  // exp
-						IssuedAt:  1640681219,                                                                  // iat
+						ExpiresAt: time.Now().AddDate(0, 0, -1).Unix(),                                         // exp
+						IssuedAt:  time.Now().AddDate(0, 0, -2).Unix(),                                         // iat
 						Issuer:    "https://accounts.google.com",                                               // iss
 						Subject:   "110169484474386276334",                                                     // sub
 					},
@@ -116,8 +117,8 @@ func Test_googleLogin_Login(t *testing.T) {
 					"en",
 					jwt.StandardClaims{
 						Audience:  "1008719970978-hb24n2dstb40o45d4feuo2ukqmcc6381.apps.googleusercontent.com", // aud
-						ExpiresAt: 1700000000,                                                                  // exp
-						IssuedAt:  1700000000,                                                                  // iat
+						ExpiresAt: time.Now().AddDate(0, 0, 2).Unix(),                                          // exp
+						IssuedAt:  time.Now().AddDate(0, 0, 1).Unix(),                                          // iat
 						Issuer:    "https://accounts.google.com",                                               // iss
 						Subject:   "110169484474386276334",                                                     // sub
 					},

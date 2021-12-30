@@ -5,11 +5,12 @@ import (
 )
 
 const (
-	GOOGLE   = "Google"
-	FACEBOOK = "Facebook"
-	APPLE    = "Apple"
-	OTP      = "OTP"
-	ERROR    = "Error"
+	GOOGLE       = "Google"
+	FACEBOOK     = "Facebook"
+	APPLE        = "Apple"
+	OTP          = "OTP"
+	ERROR        = "Error"
+	GOOGLEISSUER = "https://accounts.google.com"
 )
 
 var SIGNINGKEY = []byte("secret")

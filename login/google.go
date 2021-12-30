@@ -43,7 +43,7 @@ func (l googleLogin) Login() (userdata, error) {
 	}
 
 	// Handle issuer
-	if claims.Issuer != "https://accounts.google.com" {
+	if claims.Issuer != GOOGLEISSUER {
 		return nil, fmt.Errorf("Unsupported issuer")
 	}
 
